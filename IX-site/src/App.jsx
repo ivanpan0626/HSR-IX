@@ -15,8 +15,8 @@ function App() {
   const findUser = async() => {
     const response = await api.post('/testRoute/601066866/4')
     .then(response =>{
-      console.log('thru')
-        setChar(response.data.name)
+      console.log(response.data.showcase)
+        setChar(response.data.showcase)
       })
       .catch(error => {
         console.log('error')
@@ -38,12 +38,17 @@ function App() {
           count is {count}
         </button>
         <button onClick={findUser}>
-          test button {char}
+          test button
         </button>
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
       </div>
+      {char.map((characters, index) => (
+        <div key={index}>
+          Character: {characters}
+        </div>
+      ))}
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
