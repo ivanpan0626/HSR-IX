@@ -7,13 +7,16 @@ import axios from 'axios'
 function App() {
   const [count, setCount] = useState(0)
   const [char, setChar] = useState("")
+  const [uid, setUid] = useState("")
   const api = axios.create({
     baseURL: 'http://127.0.0.1:5000',
     withCredentials: true,  // Include cookies in requests
   })
 
-  const findUser = async() => {
-    const response = await api.post('/testRoute/601066866/4')
+  const findUser = async(e) => {
+    console.log(uid)
+    e.preventDefault()
+    const response = await api.post('/testRoute/'+{uid}+'/4')
     .then(response =>{
       console.log(response.data.showcase)
         setChar(response.data.showcase)
@@ -24,34 +27,29 @@ function App() {
   }
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
+      <h1>HSR-IX</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <button onClick={findUser}>
-          test button
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+        <form>
+          <label htmlFor="input-bar">UID: </label>
+          <input 
+            type="text"
+            onChange={(e) => setUid(e.target.value)}
+            placeholder="Enter UID"
+          />
+          <button onClick={findUser}>
+            Find characters
+          </button>
+        </form>
       </div>
-      {char.map((characters, index) => (
-        <div key={index}>
-          Character: {characters}
-        </div>
-      ))}
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      {char !== "" ? (
+  char.map((characters, index) => (
+    <div key={index}>
+      Character: {characters}
+    </div>
+  ))
+) : (
+  <></>
+)}
     </>
   )
 }

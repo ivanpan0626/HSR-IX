@@ -16,5 +16,6 @@ async def main(uid, showcaseNum) -> None:
 
 @testRoute.route('/<uid>/<showcaseNum>', methods=['POST'])
 def findUser(uid, showcaseNum):
+    print(uid)
     val = asyncio.run(main(uid, int(showcaseNum)))
     return {'showcase': val}
